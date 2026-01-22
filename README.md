@@ -147,9 +147,11 @@ Reference implementations (adapt, don't copy):
 
 | Template | Description |
 |----------|-------------|
-| [run.ps1.example](templates/run.ps1.example) | Thin wrapper skeleton |
-| [build.ps1.example](templates/build.ps1.example) | Orchestrator skeleton |
-| [build.py.example](templates/build.py.example) | Python-specific logic |
+| [run.ps1](templates/run.ps1) | Thin wrapper skeleton |
+| [build.ps1](templates/build.ps1) | Orchestrator skeleton |
+| [build.py](templates/build.py) | Python-specific logic |
+| [build.rs](templates/build.rs) | Rust-specific logic |
+| [build.ts](templates/build.ts) | TypeScript-specific logic |
 
 ## Schema
 
