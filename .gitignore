@@ -1,0 +1,6 @@
+# Local CI artifacts (never commit)
+.ci_cache/
+.enforcer/
+
+# Temporary files
+temporary/

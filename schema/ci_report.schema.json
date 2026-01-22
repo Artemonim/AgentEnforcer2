@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Artemonim/AgentEnforcer2/schema/ci_report.schema.json",
+  "title": "CI Report",
+  "description": "Schema for local CI run reports following the Agent Enforcer 2 blueprint",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "started_at_utc",
+    "finished_at_utc",
+    "duration_ms",
+    "status",
+    "stages",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "description": "Schema version for forward compatibility",
+      "minimum": 1
+    },
+    "started_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "CI run start timestamp (ISO 8601)"
+    },
+    "finished_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "CI run end timestamp (ISO 8601)"
+    },
+    "duration_ms": {
+      "type": "integer",
+      "description": "Total duration in milliseconds",
+      "minimum": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "warn", "fail"],
+      "description": "Overall CI run status"
+    },
+    "stages": {
+      "type": "array",
+      "description": "List of stage results",
+      "items": {
+        "$ref": "#/definitions/stage"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "description": "List of detected issues",
+      "items": {
+        "$ref": "#/definitions/issue"
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Optional metrics (coverage, test counts, etc.)",
+      "properties": {
+        "coverage": {
+          "$ref": "#/definitions/coverage_metrics"
+        },
+        "test_counts": {
+          "$ref": "#/definitions/test_counts"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "definitions": {
+    "stage": {
+      "type": "object",
+      "required": ["name", "status"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Stage identifier (e.g., 'fmt', 'lint', 'test')"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "fail", "cached", "skip"],
+          "description": "Stage completion status"
+        },
+        "note": {
+          "type": "string",
+          "description": "Human-readable status details"
+        },
+        "details": {
+          "type": "object",
+          "description": "Optional structured details (tool- or stage-specific)",
+          "additionalProperties": true
+        },
+        "duration_ms": {
+          "type": "integer",
+          "description": "Stage duration in milliseconds",
+          "minimum": 0
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["language", "tool", "rule", "count"],
+      "properties": {
+        "language": {
+          "type": "string",
+          "description": "Language or context (e.g., 'python', 'rust', 'ci')"
+        },
+        "tool": {
+          "type": "string",
+          "description": "Tool that reported the issue (e.g., 'ruff', 'clippy')"
+        },
+        "rule": {
+          "type": "string",
+          "description": "Rule or error code (e.g., 'E501', 'clippy::unwrap_used')"
+        },
+        "count": {
+          "type": "integer",
+          "description": "Number of occurrences",
+          "minimum": 1
+        },
+        "message": {
+          "type": "string",
+          "description": "Representative message or description"
+        }
+      }
+    },
+    "coverage_metrics": {
+      "type": "object",
+      "properties": {
+        "lines_percent": {
+          "type": "number",
+          "description": "Line coverage percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "functions_percent": {
+          "type": "number",
+          "description": "Function coverage percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "branches_percent": {
+          "type": "number",
+          "description": "Branch coverage percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warn", "fail"],
+          "description": "Coverage threshold status"
+        }
+      }
+    },
+    "test_counts": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "description": "Total number of tests",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "description": "Number of passed tests",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "description": "Number of failed tests",
+          "minimum": 0
+        },
+        "skipped": {
+          "type": "integer",
+          "description": "Number of skipped tests",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

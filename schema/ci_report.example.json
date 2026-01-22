@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2024-01-15T10:30:00Z",
+  "finished_at_utc": "2024-01-15T10:32:45Z",
+  "duration_ms": 165000,
+  "status": "warn",
+  "stages": [
+    {
+      "name": "self-check",
+      "status": "ok",
+      "note": "CI scripts validated",
+      "duration_ms": 120
+    },
+    {
+      "name": "fmt",
+      "status": "ok",
+      "duration_ms": 1200
+    },
+    {
+      "name": "lint",
+      "status": "warn",
+      "note": "5 warnings (non-critical)",
+      "duration_ms": 3500
+    },
+    {
+      "name": "compile",
+      "status": "ok",
+      "duration_ms": 8200
+    },
+    {
+      "name": "test",
+      "status": "cached",
+      "note": "Cache hit",
+      "duration_ms": 0
+    },
+    {
+      "name": "coverage",
+      "status": "warn",
+      "note": "72.5% < 80% warn threshold",
+      "duration_ms": 95000
+    },
+    {
+      "name": "security",
+      "status": "ok",
+      "duration_ms": 12100
+    }
+  ],
+  "issues": [
+    {
+      "language": "python",
+      "tool": "ruff",
+      "rule": "E501",
+      "count": 3,
+      "message": "Line too long (> 100 characters)"
+    },
+    {
+      "language": "python",
+      "tool": "ruff",
+      "rule": "F401",
+      "count": 2,
+      "message": "Unused import"
+    },
+    {
+      "language": "ci",
+      "tool": "coverage",
+      "rule": "below_warn",
+      "count": 1,
+      "message": "Coverage 72.5% below 80% warn threshold"
+    }
+  ],
+  "metrics": {
+    "coverage": {
+      "lines_percent": 72.5,
+      "functions_percent": 68.2,
+      "branches_percent": 65.0,
+      "status": "warn"
+    },
+    "test_counts": {
+      "total": 142,
+      "passed": 142,
+      "failed": 0,
+      "skipped": 0
+    }
+  }
+}
