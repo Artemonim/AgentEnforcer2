@@ -69,7 +69,7 @@ Language-specific logic is delegated to `build.<lang>` scripts.
 
 Not every run needs full coverage or security analysis. Profiles let the agent choose the right trade-off.
 
-See: `docs/PROFILES.md`.
+See: [PROFILES.md](PROFILES.md).
 
 Typical intent:
 - `-Fast`: agent self-check / quick iteration

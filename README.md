@@ -1,5 +1,8 @@
 # Agent Enforcer 2: Local CI Blueprint
 
+[![English](https://img.shields.io/badge/lang-English-blue.svg)](README.md)
+[![Russian](https://img.shields.io/badge/lang-Русский-lightgrey.svg)](README.ru.md)
+
 **A reference architecture for building robust, language-agnostic local CI systems.**
 
 Agent Enforcer 2 is not a tool you install — it's a concept and blueprint for implementing local CI in your projects. It documents battle-tested patterns for orchestrating code quality checks, managing caches, detecting hangs, and producing structured reports.
@@ -19,7 +22,7 @@ Agent Enforcer 2 is not a tool you install — it's a concept and blueprint for 
 - This repository is designed to be given to an LLM as context. Copy prompt below to chat with AI Agent.
 - Do this in two consecutive chats:
     - Chat 1: planning only — [create CI_TODO.md](#chat-1).
-    - Chat 2: implementation — implement CI_TODO.md
+    - Chat 2: implementation — [implement CI_TODO.md](#chat-2)
 
 #### Chat 1
 
@@ -27,11 +30,11 @@ Agent Enforcer 2 is not a tool you install — it's a concept and blueprint for 
 Create a `CI_TODO.md` for the local CI system in my project following the [Agent Enforcer 2](https://github.com/Artemonim/AgentEnforcer2) blueprint.
 
 Read the docs in this order:
-1. `docs/CONCEPT.md` — understand the philosophy
-2. `docs/ARCHITECTURE.md` — three-tier structure (`run.ps1` → `build.ps1` → `build.<lang>`)
-3. `docs/STAGES.md` — stage contracts and status semantics
-4. `docs/REPORT_FORMAT.md` — output contracts (report + Enforcer logs)
-5. `docs/CACHING.md` — hash-based caching
+1. `docs/en/CONCEPT.md` — understand the philosophy
+2. `docs/en/ARCHITECTURE.md` — three-tier structure (`run.ps1` → `build.ps1` → `build.<lang>`)
+3. `docs/en/STAGES.md` — stage contracts and status semantics
+4. `docs/en/REPORT_FORMAT.md` — output contracts (report + Enforcer logs)
+5. `docs/en/CACHING.md` — hash-based caching
 6. `templates/` — reference implementations
 
 Adapt the patterns to my project's language and existing tooling.
@@ -52,13 +55,13 @@ Implement the `CI_TODO.md`
 
 | Priority | Document | Why |
 |----------|----------|-----|
-| 1 | [CONCEPT.md](docs/CONCEPT.md) | Philosophy and "why" |
-| 2 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Core three-tier structure |
-| 3 | [STAGES.md](docs/STAGES.md) | Stage contracts |
-| 4 | [CACHING.md](docs/CACHING.md) | Skip redundant work |
+| 1 | [CONCEPT.md](docs/en/CONCEPT.md) | Philosophy and "why" |
+| 2 | [ARCHITECTURE.md](docs/en/ARCHITECTURE.md) | Core three-tier structure |
+| 3 | [STAGES.md](docs/en/STAGES.md) | Stage contracts |
+| 4 | [CACHING.md](docs/en/CACHING.md) | Skip redundant work |
 | 5 | [templates/](templates/) | Reference implementations |
-| Optional | [HEARTBEAT.md](docs/HEARTBEAT.md) | For long-running stages |
-| Optional | [PROFILES.md](docs/PROFILES.md) | For complex projects |
+| Optional | [HEARTBEAT.md](docs/en/HEARTBEAT.md) | For long-running stages |
+| Optional | [PROFILES.md](docs/en/PROFILES.md) | For complex projects |
 
 #### What You Should Do
 
@@ -133,13 +136,13 @@ The reference scripts in this blueprint are written for PowerShell on Windows, b
 
 | Document | Description |
 |----------|-------------|
-| [CONCEPT.md](docs/CONCEPT.md) | Philosophy and design rationale |
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Three-tier structure and data flow |
-| [STAGES.md](docs/STAGES.md) | Stage definitions, statuses, and contracts |
-| [CACHING.md](docs/CACHING.md) | Hash-based caching and trust stamps |
-| [HEARTBEAT.md](docs/HEARTBEAT.md) | Watchdog patterns for hang detection |
-| [REPORT_FORMAT.md](docs/REPORT_FORMAT.md) | CI report JSON schema and usage |
-| [PROFILES.md](docs/PROFILES.md) | Execution profiles (fast, full, security) |
+| [CONCEPT.md](docs/en/CONCEPT.md) | Philosophy and design rationale |
+| [ARCHITECTURE.md](docs/en/ARCHITECTURE.md) | Three-tier structure and data flow |
+| [STAGES.md](docs/en/STAGES.md) | Stage definitions, statuses, and contracts |
+| [CACHING.md](docs/en/CACHING.md) | Hash-based caching and trust stamps |
+| [HEARTBEAT.md](docs/en/HEARTBEAT.md) | Watchdog patterns for hang detection |
+| [REPORT_FORMAT.md](docs/en/REPORT_FORMAT.md) | CI report JSON schema and usage |
+| [PROFILES.md](docs/en/PROFILES.md) | Execution profiles (fast, full, security) |
 
 ## Templates
 
@@ -201,6 +204,10 @@ This blueprint is extracted from production CI systems used in:
 ## License
 
 MIT License. Use these patterns freely in your projects.
+
+## Contributing
+
+Translations are welcome! If you want to translate Agent Enforcer 2 into another language, please submit a Pull Request.
 
 ---
 
