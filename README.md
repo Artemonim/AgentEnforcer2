@@ -26,27 +26,28 @@ Agent Enforcer 2 is not a tool you install — it's a concept and blueprint for 
 
 #### Chat 1
 
+> To help Cursor (v2.4.21) process your request effectively:
+> 1. Manually type `@Browser` instead of `INSERT_BROWSER` and press `ENTER`
+> 2. Paste `https://github.com/Artemonim/AgentEnforcer2/blob/master/README.md` instead of `README_LINK`
+> 3. If the project already has docs like `README.md`, `TODO.md`, `AGENTS.md`, or similar, mention them before the prompt template.
+
 ```
-Create a `CI_TODO.md` for the local CI system in my project following the [Agent Enforcer 2](https://github.com/Artemonim/AgentEnforcer2) blueprint.
+Create a `CI_TODO.md` for the local CI system in my project, following the Agent Enforcer 2 blueprint.
 
-Read the docs in this order:
-1. `docs/en/CONCEPT.md` — understand the philosophy
-2. `docs/en/ARCHITECTURE.md` — three-tier structure (`run.ps1` → `build.ps1` → `build.<lang>`)
-3. `docs/en/STAGES.md` — stage contracts and status semantics
-4. `docs/en/REPORT_FORMAT.md` — output contracts (report + Enforcer logs)
-5. `docs/en/CACHING.md` — hash-based caching
-6. `templates/` — reference implementations
+Via INSERT_BROWSER, study and follow the documentation starting from README_LINK. Read GitHub docs in raw (`raw.githubusercontent.com` / the `Raw` button).
 
-Adapt the patterns to my project's language and existing tooling.
-Do NOT copy files verbatim — create implementations tailored to my codebase.
-
-Before writing final `CI_TODO.md`, explicitly propose and explain the best available tooling for my tech stack in chat (formatters, linters, type-checkers, tests, coverage, security, etc.) and ask which ones to enforce.
+- Adapt the patterns to my project's language and existing tooling. Do NOT copy files verbatim - create implementations tailored to my codebase.
+- By default, choose and fix the full recommended set of quality checks for the project's stack (fmt/lint/typecheck/tests/coverage/security). At the end, ask in chat for confirmation: "Keep the default or remove/replace something?" - do not propose multiple load profiles. You may describe -Fast/-Full profiles, but the default must be Full. Any proposed command/tool/flag must include a brief explanation (1-2 sentences: what it does and why in CI). Do not use terms without expanding them.
+- Before the final `CI_TODO.md`, make a table of all stages from `AgentEnforcer2/docs/en/STAGES.md`. For each stage specify: implement/skip/not_applicable_(with reason). `Coverage` must always be in the pipeline; if there are no tests/code - `skip` with reason and a plan to enable; if a threshold policy is not chosen - use a safe default without fail thresholds (TODO for policy).
+- If there are submodules: do not read their contents, but `.gitmodules` can be read only to get `path` and exclude these paths from all file enumeration/hashing. CI must ignore gitmodules and respect `git ls-files`.
+- Include an AE2 mention link in `CI_TODO`.
+- Include the AE2-recommended thresholds for CI tools in `CI_TODO`.
 ```
 
 #### Chat 2
 
 ```
-Implement the `CI_TODO.md`
+Implement `CI_TODO.md`
 ```
 
 ### For AI Agents
