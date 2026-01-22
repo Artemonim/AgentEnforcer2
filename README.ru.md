@@ -27,28 +27,27 @@ Agent Enforcer 2 — это не инструмент, который вы ус�
 #### Чат 1
 
 ```
-Create a `CI_TODO.md` for the local CI system in my project following the [Agent Enforcer 2](https://github.com/Artemonim/AgentEnforcer2) blueprint.
+Создай `CI_TODO.md` для системы локального CI в моём проекте, следуя схеме [Agent Enforcer 2](https://github.com/Artemonim/AgentEnforcer2).
 
-Read the docs in this order:
-1. `docs/en/CONCEPT.md` — understand the philosophy
-2. `docs/en/ARCHITECTURE.md` — three-tier structure (`run.ps1` → `build.ps1` → `build.<lang>`)
-3. `docs/en/STAGES.md` — stage contracts and status semantics
-4. `docs/en/REPORT_FORMAT.md` — output contracts (report + Enforcer logs)
-5. `docs/en/CACHING.md` — hash-based caching
-6. `templates/` — reference implementations
+Изучи документацию в следующем порядке:
+1. `docs/ru/CONCEPT.md` — философия и концепция
+2. `docs/ru/ARCHITECTURE.md` — трёхуровневая архитектура (`run.ps1` → `build.ps1` → `build.<lang>`)
+3. `docs/ru/STAGES.md` — контракты этапов и семантика статусов
+4. `docs/ru/REPORT_FORMAT.md` — формат вывода (отчёт + логи Enforcer)
+5. `docs/ru/CACHING.md` — хеш-кэширование
+6. `templates/` — эталонные реализации
 
-Adapt the patterns to my project's language and existing tooling.
-Do NOT copy files verbatim — create implementations tailored to my codebase.
+Адаптируй паттерны под язык моего проекта и существующий инструментарий.
+НЕ копируй файлы дословно — создавай реализации, адаптированные под мою кодовую базу.
 
-Before writing final `CI_TODO.md`, explicitly propose and explain the best available tooling for my tech stack in chat (formatters, linters, type-checkers, tests, coverage, security, etc.) and ask which ones to enforce.
+Перед написанием финального `CI_TODO.md` явно предложи и объясни в чате лучшие доступные инструменты для моего технологического стека (форматтеры, линтеры, тайп-чекеры, тесты, покрытие, безопасность и т.д.) и спроси, какие из них следует использовать.
 ```
 
-*(Примечание: промпт лучше оставить на английском, так как он адресован LLM)*
 
 #### Чат 2
 
 ```
-Implement the `CI_TODO.md`
+Реализуй `CI_TODO.md`
 ```
 
 ### Для AI-агентов
