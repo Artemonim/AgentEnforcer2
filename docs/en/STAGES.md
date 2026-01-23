@@ -109,6 +109,10 @@ This stage is intentionally language-agnostic and can be implemented as:
 - Max files per directory (warn/fail thresholds)
 - A short "top offenders" list for the console summary
 
+**Clarification**:
+- Count executable lines only; ignore blank lines, comments, and pure documentation lines.
+  - example: in Rust unit tests can live in the same source file (e.g., `#[cfg(test)] mod tests`), so `line-limits` must be based on executable code lines, not the raw line count.
+
 **Status mapping**:
 - `ok`: No limits exceeded
 - `warn`: At least one warn threshold exceeded (non-blocking)
