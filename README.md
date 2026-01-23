@@ -5,7 +5,7 @@
 
 **A reference architecture for building robust, language-agnostic local CI systems.**
 
-Agent Enforcer 2 is not a tool you install — it's a concept and blueprint for implementing local CI in your projects. It documents battle-tested patterns for orchestrating code quality checks, managing caches, detecting hangs, and producing structured reports.
+Agent Enforcer 2 it's a concept to implementing local CI in your projects. It documents battle-tested patterns for orchestrating code quality checks, managing caches, detecting hangs, and producing structured reports.
 
 **See also**:
 
