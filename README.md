@@ -157,6 +157,23 @@ Reference implementations (adapt, don't copy):
 | [build.rs](templates/build.rs) | Rust-specific logic |
 | [build.ts](templates/build.ts) | TypeScript-specific logic |
 
+### Optional (Recommended): CI Sounds
+
+You can add **audible markers** for the flow and completion of local CI:
+- A "success" marker when CI ends successfully (when `-SkipLaunch` is used)
+- A "failure" marker on the first failure
+- A "launch" marker when the application is started after CI
+
+This blueprint includes a reference implementation in `templates/build.ps1` and sound assets in `assets/ci_sounds` (Opus).
+
+**Requirements**:
+- Install any audio player available in PATH: `ffplay`, `mpv`, or `vlc`.
+
+**How to disable** (intentionally not a 1-flag toggle):
+- Remove `assets/ci_sounds/*`.
+
+> Avoid adding a `-Mute` flag to CI scripts. Agents may overuse it to "not disturb" the user, while the user want to be "disturbed" by CI completion/failure.
+
 ## Schema
 
 | File | Description |

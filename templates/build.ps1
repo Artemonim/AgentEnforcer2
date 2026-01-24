@@ -57,6 +57,103 @@ $script:StageResults = @()
 $script:Issues = @()
 #endregion Configuration
 
+#region Sound (optional, recommended)
+# * Adds audible markers for CI progress/completion if sound assets are present.
+# * Recommended for local CI: it makes failures and completion noticeable even when the window is not focused.
+$CiSoundRoot = Join-Path $ScriptRoot "assets/ci_sounds"
+$CiSoundMap = @{
+    success = Join-Path $CiSoundRoot "ci_success.opus"
+    failure = Join-Path $CiSoundRoot "ci_failure.opus"
+    launch  = Join-Path $CiSoundRoot "ci_launch.opus"
+}
+
+$CiSoundEnabled = $false
+if (Test-Path -Path $CiSoundRoot -PathType Container) {
+    $missing = @()
+    foreach ($kind in @("success", "failure", "launch")) {
+        $path = $CiSoundMap[$kind]
+        if (-not $path -or -not (Test-Path -Path $path -PathType Leaf)) {
+            $missing += $kind
+        }
+    }
+
+    if ($missing.Count -eq 0) {
+        $CiSoundEnabled = $true
+    } else {
+        Write-Warning ("[sound] Sound assets folder exists, but some files are missing: {0}" -f ($missing -join ", "))
+    }
+}
+
+$script:CiFailed = $false
+$script:CiFailureSoundPlayed = $false
+
+function Invoke-CiSound {
+    param(
+        [ValidateSet("success", "failure", "launch")]
+        [string]$Kind
+    )
+
+    if (-not $CiSoundEnabled) {
+        return
+    }
+
+    $path = $CiSoundMap[$Kind]
+    if (-not $path -or -not (Test-Path -Path $path -PathType Leaf)) {
+        Write-Warning ("[sound] Missing {0} sound file: {1}" -f $Kind, $path)
+        return
+    }
+
+    $player = $null
+    foreach ($candidate in @("ffplay", "mpv", "vlc")) {
+        $cmd = Get-Command $candidate -ErrorAction SilentlyContinue
+        if ($cmd) {
+            $player = @{ Name = $candidate; Path = $cmd.Source }
+            break
+        }
+    }
+
+    if (-not $player) {
+        Write-Warning "[sound] No audio player found (searched: ffplay, mpv, vlc)."
+        return
+    }
+
+    $playerArgs = switch ($player.Name) {
+        "ffplay" { @("-nodisp", "-autoexit", "-loglevel", "quiet", $path) }
+        "mpv"    { @("--no-video", "--quiet", $path) }
+        "vlc"    { @("--intf", "dummy", "--play-and-exit", "--no-video", $path) }
+        default  { @($path) }
+    }
+
+    try {
+        # * Avoids conflict with PowerShell 6+ built-in $IsWindows (case-insensitive variable names).
+        $ciIsWindows = $false
+        $isWindowsBuiltIn = Get-Variable -Name "IsWindows" -ErrorAction SilentlyContinue
+        if ($isWindowsBuiltIn) {
+            $ciIsWindows = [bool]$IsWindows
+        } elseif ($env:OS -eq "Windows_NT") {
+            $ciIsWindows = $true
+        }
+
+        if ($ciIsWindows) {
+            Start-Process -FilePath $player.Path -ArgumentList $playerArgs -WindowStyle Hidden | Out-Null
+        } else {
+            Start-Process -FilePath $player.Path -ArgumentList $playerArgs | Out-Null
+        }
+    } catch {
+        Write-Warning ("[sound] Failed to play {0} sound: {1}" -f $Kind, $_.Exception.Message)
+    }
+}
+
+function Invoke-FailureSoundOnce {
+    if ($script:CiFailureSoundPlayed) {
+        return
+    }
+    $script:CiFailureSoundPlayed = $true
+    Invoke-CiSound -Kind "failure"
+}
+
+#endregion Sound
+
 #region Helpers
 function Add-StageResult {
     param(
@@ -197,6 +294,11 @@ function Invoke-Stage {
     }
     catch {
         Add-StageResult -Name $Name -Status "fail" -Note $_.Exception.Message
+
+        if (-not $script:CiFailed) {
+            $script:CiFailed = $true
+            Invoke-FailureSoundOnce
+        }
         
         if ($Critical) {
             Write-Host "Critical stage failed, stopping pipeline." -ForegroundColor Red
@@ -338,6 +440,10 @@ try {
 }
 catch {
     Write-Host "Pipeline failed: $($_.Exception.Message)" -ForegroundColor Red
+    if (-not $script:CiFailed) {
+        $script:CiFailed = $true
+        Invoke-FailureSoundOnce
+    }
 }
 finally {
     # ─────────────────────────────────────────────────────────────────────────
@@ -395,7 +501,17 @@ finally {
     # Exit code based on overall status
     $hasFail = $script:StageResults | Where-Object { $_.status -eq "fail" }
     if ($hasFail) {
+        # * Ensures the failure marker plays even if the failure originated outside Invoke-Stage.
+        if (-not $script:CiFailed) {
+            $script:CiFailed = $true
+            Invoke-FailureSoundOnce
+        }
         exit 1
+    }
+
+    # * Emits an audible "completion" marker for successful runs.
+    if ($SkipLaunch) {
+        Invoke-CiSound -Kind "success"
     }
 }
 #endregion Stages
@@ -404,6 +520,7 @@ finally {
 if (-not $SkipLaunch -and -not $hasFail) {
     Write-Host ""
     Write-Host "Launching application..." -ForegroundColor Cyan
+    Invoke-CiSound -Kind "launch"
     # TODO: Add your launch command here
     # Example:
     #   & python -m myapp
