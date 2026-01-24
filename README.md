@@ -61,6 +61,7 @@ Implement `CI_TODO.md`
 | 3 | [STAGES.md](docs/en/STAGES.md) | Stage contracts |
 | 4 | [CACHING.md](docs/en/CACHING.md) | Skip redundant work |
 | 5 | [templates/](templates/) | Reference implementations |
+| 6 | [AGENTS.md](docs/en/AGENTS.md) | How to write `AGENTS.md` as an execution contract |
 | Optional | [HEARTBEAT.md](docs/en/HEARTBEAT.md) | For long-running stages |
 | Optional | [PROFILES.md](docs/en/PROFILES.md) | For complex projects |
 
