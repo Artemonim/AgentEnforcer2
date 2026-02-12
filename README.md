@@ -7,6 +7,9 @@
 
 Agent Enforcer 2 it's a concept to implementing local CI in your projects. It documents battle-tested patterns for orchestrating code quality checks, managing caches, detecting hangs, and producing structured reports.
 
+> [!NOTE]
+> This repository is the current, maintained successor to **[Agent Enforcer](https://github.com/Artemonim/AgentEnforcer)** (archived).
+
 **See also**:
 
 <a href="https://github.com/Artemonim/AgentCompass">
@@ -220,9 +223,13 @@ This blueprint is extracted from production CI systems used in:
     - Python Telegram bot
     - 1200+ lines of CI
 
-## License
 
-MIT License. Use these patterns freely in your projects.
+## Support
+
+If you find this useful, you can support my work in two ways:
+
+- **Give a Star:** Star the repository on GitHub.
+- **Support on Sponsr:** Support me on [Sponsr](https://sponsr.ru/artemonim/).
 
 ## Contributing
 
